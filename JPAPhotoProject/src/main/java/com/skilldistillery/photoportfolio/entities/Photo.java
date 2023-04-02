@@ -14,24 +14,71 @@ public class Photo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@Column(name = "location_taken")
 	private String location;
+
+	@Column(name = "image_url")
+	private String imageUrl;
 	
+	@Column(name = "date_taken")
+	private String dateTaken;
 	
-	public Photo() {}
+	@Column(name = "camera")
+	private String camera;
 	
+	@Column(name = "description")
+	private String description;
+
+	public Photo() {
+	}
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getLocation() {
 		return location;
 	}
+
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+	public String getDateTaken() {
+		return dateTaken;
+	}
+
+	public void setDateTaken(String dateTaken) {
+		this.dateTaken = dateTaken;
+	}
+
+	public String getCamera() {
+		return camera;
+	}
+
+	public void setCamera(String camera) {
+		this.camera = camera;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Override
@@ -55,5 +102,5 @@ public class Photo {
 		Photo other = (Photo) obj;
 		return id == other.id && Objects.equals(location, other.location);
 	}
-	
+
 }
