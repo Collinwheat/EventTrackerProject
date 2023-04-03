@@ -28,3 +28,13 @@ This project is the beginnings of an event tracker. It connects to a database in
 This project was the first application in which I utilized Repositories. The use of them definitely helped me understand their nature and potential. I also learned the importance of being thorough, especially when dealing with many different parts of an application.
 
 
+
+| HTTP Verb | URI                    | Request Body | Response Body |
+|-----------|------------------------|--------------|---------------|
+| GET       | `/api/`      |         | Collection of representations of all photo resources |collection** endpoint |
+| GET       | `/api/photographs/7`   |              | Representation of photo 7     |
+| POST      | `/api/photographs`     | Representation of a new _tacostand_ resource | Description of the result of the operation | **
+| POST      | `/api/updatePhoto/7`   | Representation of a new version of _tacostand_ 7 |
+| DELETE    | `/api/delete/7`   |    | 
+
+
