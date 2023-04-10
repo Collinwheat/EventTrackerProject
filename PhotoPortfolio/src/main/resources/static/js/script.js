@@ -52,7 +52,6 @@ function displayPhotoList(photoList) {
 		let description = document.createElement('td');
 		description.textContent = photoList[i].description
 		tr.appendChild(description);
-		console.log(description);
 
 		let location = document.createElement('td');
 		location.textContent = photoList[i].location;
@@ -107,9 +106,8 @@ function updateDelete(photo, photoList) {
 	for(let i = 0; i < photoList.length; i++){
 		if(photo.location === photoList[i].location && photo !== photoList[i])
 		photosByLocation.push(photoList[i]);
+		console.log(photosByLocation[i]);
 	}
-	
-	
 	
 	let div = document.getElementById('updateDelete')
 	div.textContent = " ";
@@ -131,13 +129,14 @@ function updateDelete(photo, photoList) {
 	div.appendChild(camera);
 
 	let image = document.createElement('h4');
-	image.textContent = photo.image;
+	var img = new Image();
+	img.src = photo.imageUrl;
 	div.appendChild(image);
 	
 	let similarPhotos = document.createElement('ul');
 	for(let i = 0; i < photosByLocation.length; i++){
 		let li = document.createElement('li')
-		li.textContent = photosByLocation[i].description + photosByLocation[i].location + photosByLocation[i].camera + photosByLocation[i].url;
+		li.textContent = photosByLocation[i].description + " " + photosByLocation[i].location + " " + photosByLocation[i].camera;
 		similarPhotos.appendChild(li);
 	}
 	div.appendChild(similarPhotos);
@@ -172,7 +171,8 @@ function updatePhoto(photo) {
 
 	let description = document.createElement('input')
 	description.id = 'description';
-	description.name = 'description'
+	description.name = 'description';
+	description.value = 'description';
 	description.type = 'text';
 	updatePhotoForm.appendChild(description);
 
@@ -180,6 +180,7 @@ function updatePhoto(photo) {
 	let location = document.createElement('input');
 	location.id = 'location';
 	location.name = 'location';
+	location.value = 'location'
 	location.type = 'text';
 	updatePhotoForm.appendChild(location);
 
@@ -187,6 +188,7 @@ function updatePhoto(photo) {
 	let date = document.createElement('input');
 	date.id = 'date';
 	date.name = 'date';
+	date.value = 'date'
 	date.type = 'text';
 	updatePhotoForm.appendChild(date);
 
@@ -195,12 +197,14 @@ function updatePhoto(photo) {
 	camera.id = 'camera';
 	camera.name = 'camera';
 	camera.type = 'text';
+	camera.placeholder = 'camera';
 	updatePhotoForm.appendChild(camera);
 
 
 	let image = document.createElement('input');
 	image.id = 'image';
 	image.name = 'image';
+	image.value = 'URL'
 	image.type = 'text';
 	updatePhotoForm.appendChild(image);
 
