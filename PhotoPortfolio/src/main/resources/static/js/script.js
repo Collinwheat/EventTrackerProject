@@ -12,7 +12,7 @@ function init() {
 			location: createPhotoForm.location.value,
 			dateTaken: createPhotoForm.dateTaken.value,
 			camera: createPhotoForm.cameraused.value,
-			url: createPhotoForm.url.value
+			imageUrl: createPhotoForm.url.value
 		}
 		createNewPhoto(photo);
 		console.log(photo);
@@ -45,7 +45,7 @@ function displayPhotoList(photoList) {
 	for (let i = 0; i < photoList.length; i++) {
 		let tr = document.createElement("tr");
 		tr.addEventListener('click', function(e) {
-			updateDelete(photoList[i]);
+			updateDelete(photoList[i], photoList);
 		});
 		tbody.appendChild(tr);
 
@@ -84,6 +84,8 @@ function createNewPhoto(newPhoto) {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200 || xhr.readyState === 201) {
 				console.log('complete');
+				alert("Photo Has Been Created")
+				loadAllPhotos();
 			}
 			else {
 				console.error('Error Creating Film ' + xhr.status);
@@ -98,7 +100,17 @@ function createNewPhoto(newPhoto) {
 
 }
 
-function updateDelete(photo) {
+function updateDelete(photo, photoList) {
+	
+	let photosByLocation = [];
+
+	for(let i = 0; i < photoList.length; i++){
+		if(photo.location === photoList[i].location && photo !== photoList[i])
+		photosByLocation.push(photoList[i]);
+	}
+	
+	
+	
 	let div = document.getElementById('updateDelete')
 	div.textContent = " ";
 
@@ -121,6 +133,14 @@ function updateDelete(photo) {
 	let image = document.createElement('h4');
 	image.textContent = photo.image;
 	div.appendChild(image);
+	
+	let similarPhotos = document.createElement('ul');
+	for(let i = 0; i < photosByLocation.length; i++){
+		let li = document.createElement('li')
+		li.textContent = photosByLocation[i].description + photosByLocation[i].location + photosByLocation[i].camera + photosByLocation[i].url;
+		similarPhotos.appendChild(li);
+	}
+	div.appendChild(similarPhotos);
 
 	let update = document.createElement('input');
 	update.addEventListener('click', function(e) {
@@ -201,7 +221,7 @@ function updatePhoto(photo) {
 			location: updatePhotoForm.location.value,
 			dateTaken: updatePhotoForm.date.value,
 			camera: updatePhotoForm.camera.value,
-			url: updatePhotoForm.image.value
+			imageUrl: updatePhotoForm.image.value
 		}
 
 		console.log(JSON.stringify(updatedPhoto));
@@ -214,6 +234,7 @@ function updatePhoto(photo) {
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState === 4) {
 				if (xhr.status === 200) {
+					alert("Photo Has Been Updated")
 					loadAllPhotos();
 				} else {
 					console.error('Film Not Found');
