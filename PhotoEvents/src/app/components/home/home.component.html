@@ -2,7 +2,7 @@
 <h1>Photos</h1>
 
 
-<table>
+<table class="table-bordered" id="displayTable">
   <thead>
     <tr>
       <th>Description</th>
@@ -18,14 +18,38 @@
       <td>{{photo.location}}</td>
       <td>{{photo.camera}}</td>
       <td>{{photo.dateTaken}}</td>
-      <td>{{photo.imageUrl}}</td>
+      <td class="img">{{photo.imageUrl}}</td>
     </tr>
   </tbody>
 </table>
 
-<input type = 'submit' value = 'Create New Photo' (click)="createForm = true">
+<!-- <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active" *ngFor="let photo of photos">
+      <img src="{{photo.imageUrl}}" class='img' class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>{{photo.description}}</h5>
+        <p>{{photo.camera}}</p>
+        <p>{{photo.dateTaken}}</p>
+        <p>{{photo.location}}</p>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div> -->
 
-<form *ngIf="createForm" name="createPhoto">
+
+<div class="text-center">
+<input class="btn btn-success" type = 'submit' value = 'Create New Photo' (click)="createForm = true">
+
+<form *ngIf="createForm" name="createPhoto" id="createForm">
   <input type = 'text' name = "description" placeholder="Description" [(ngModel)]="newPhoto.description"><br>
   <input type = 'text' name = "location" placeholder="Location" [(ngModel)]="newPhoto.location"><br>
   <input type = 'text' name = "camera" placeholder="Camera" [(ngModel)]="newPhoto.camera"><br>
@@ -33,13 +57,14 @@
   <input type = 'text' name = "url" placeholder="URL" [(ngModel)]="newPhoto.imageUrl"><br>
   <input type= 'submit' value = 'submit' (click)="addPhoto(newPhoto)" (click)="createForm = false">
 </form>
+</div>
 
-<div id="detailedView" *ngIf="selected != null">
+<div class='text-center' id="detailedView" *ngIf="selected != null">
   <h2>Location: {{selected.location}}</h2>
   <h2>Description: {{selected.description}}</h2>
   <h2>Camera: {{selected.camera}}</h2>
   <h2>Date Taken: {{selected.dateTaken}}</h2>
-  <img src="https://www.instagram.com/p/BuWa3_sDHd-/?utm_source=ig_embed&amp;utm_campaign=loading"><br>
+  <img class="img" src="{{selected.imageUrl}}"><br>
   <button class="btn btn-danger" (click)="delete(selected.id)">Delete This Photo</button>
   <button class="btn btn-danger" (click)="editPhoto = selected">Update This Photo</button>
 
