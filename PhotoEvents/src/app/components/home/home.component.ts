@@ -10,6 +10,11 @@ import { PhotoService } from 'src/app/services/photo.service';
 export class HomeComponent implements OnInit{
 
   photos: Photo[] = [];
+  createForm : boolean = false;
+  newPhoto: Photo = new Photo();
+  selected: Photo | null = null;
+  editPhoto: Photo | null = null;
+  updatePhoto: Photo | null = null;
 
   constructor(
     private photoServ: PhotoService
@@ -28,6 +33,50 @@ export class HomeComponent implements OnInit{
         //todo: Log failures;
       }
 
+    });
+  }
+
+  addPhoto(photo: Photo){
+    this.photoServ.create(photo).subscribe({
+      next: (createdphoto) => {
+        this.newPhoto = createdphoto;
+        this.reload();
+      },
+      error:(fail) => {
+        console.error('Error creating todo');
+        console.error(fail);
+      }
+    })
+    // this.todos = this.todoService.index();
+  }
+
+  displayPhoto(photo: Photo){
+    this.selected = photo;
+
+  }
+
+  delete(photoId: number){
+    this.photoServ.destroy(photoId).subscribe({
+      next: (Response) => {
+        console.log(Response)
+        this.reload();
+      },
+      error:(fail) => {
+        console.error(fail)
+      }
+    })
+  }
+
+  update(photo: Photo, photoId: number){
+    console.log(photo);
+    this.photoServ.update(photo).subscribe({
+      next:(updatedPhoto) => {
+        this.editPhoto = null;
+        this.reload();
+      },
+      error:(fail) => {
+        console.error(fail);
+      }
     });
   }
 

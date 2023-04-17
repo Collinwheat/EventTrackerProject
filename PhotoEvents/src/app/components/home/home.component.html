@@ -1,5 +1,59 @@
+<link rel="stylesheet" href="/styles.css">
 <h1>Photos</h1>
 
-<ul>
-  <li *ngFor="let photo of photos" {{photo.id}}></li>
-</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th>Location</th>
+      <th>Camera</th>
+      <th>Date Taken</th>
+      <th>Image URL</th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let photo of photos">
+    <tr (click)="displayPhoto(photo)">
+      <td>{{photo.description}}</td>
+      <td>{{photo.location}}</td>
+      <td>{{photo.camera}}</td>
+      <td>{{photo.dateTaken}}</td>
+      <td>{{photo.imageUrl}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<input type = 'submit' value = 'Create New Photo' (click)="createForm = true">
+
+<form *ngIf="createForm" name="createPhoto">
+  <input type = 'text' name = "description" placeholder="Description" [(ngModel)]="newPhoto.description"><br>
+  <input type = 'text' name = "location" placeholder="Location" [(ngModel)]="newPhoto.location"><br>
+  <input type = 'text' name = "camera" placeholder="Camera" [(ngModel)]="newPhoto.camera"><br>
+  <input type = 'text' name = "date" placeholder="Date" [(ngModel)]="newPhoto.dateTaken"><br>
+  <input type = 'text' name = "url" placeholder="URL" [(ngModel)]="newPhoto.imageUrl"><br>
+  <input type= 'submit' value = 'submit' (click)="addPhoto(newPhoto)" (click)="createForm = false">
+</form>
+
+<div id="detailedView" *ngIf="selected != null">
+  <h2>Location: {{selected.location}}</h2>
+  <h2>Description: {{selected.description}}</h2>
+  <h2>Camera: {{selected.camera}}</h2>
+  <h2>Date Taken: {{selected.dateTaken}}</h2>
+  <img src="https://www.instagram.com/p/BuWa3_sDHd-/?utm_source=ig_embed&amp;utm_campaign=loading"><br>
+  <button class="btn btn-danger" (click)="delete(selected.id)">Delete This Photo</button>
+  <button class="btn btn-danger" (click)="editPhoto = selected">Update This Photo</button>
+
+</div>
+
+<div *ngIf="editPhoto">
+  <form>
+    <input type = 'text' name = "description" placeholder={{editPhoto.description}} [(ngModel)]="editPhoto.description"><br>
+  <input type = 'text' name = "location" placeholder={{editPhoto.location}} [(ngModel)]="editPhoto.location"><br>
+  <input type = 'text' name = "camera" placeholder={{editPhoto.camera}} [(ngModel)]="editPhoto.camera"><br>
+  <input type = 'text' name = "date" placeholder={{editPhoto.dateTaken}} [(ngModel)]="editPhoto.dateTaken"><br>
+  <input type = 'text' name = "url" placeholder={{editPhoto.imageUrl}} [(ngModel)]="editPhoto.imageUrl"><br>
+  <input type = 'submit' name = submit (click)="update(editPhoto, editPhoto.id)">
+  </form>
+
+
+</div>
